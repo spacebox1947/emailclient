@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -13,6 +13,10 @@ export class InputComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    /* if (!this.control.get('username') ||
+    !(this.control.get('username') instanceof FormControl)) {
+      this.control.addControl('username', new FormControl());
+    } */
   }
 
   showErrors() {

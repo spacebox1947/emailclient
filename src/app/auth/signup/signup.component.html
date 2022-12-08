@@ -9,7 +9,7 @@
 
     <app-input
         label="Username"
-        [control]="authForm.get('username')"
+        [control]="authForm.get('username') ? authForm.get('username') : null"
     ></app-input>
     {{ authForm.get('username')?.errors | json }}
 
