@@ -3,6 +3,37 @@
   <a routerLink="">Sign Up</a>
 </div> -->
 
-<div>
+<!-- this could be in a separate Shared component -->
+<div class="ui container">
+  <div class="ui secondary pointing menu">
+    <a routerLink="/" class="item">Angular Email</a>
+
+    <div class="right menu">
+      <!-- Use some async pipe and subscribable knowledge in the template -->
+        <!-- <ng-container *ngIf="signedIn | async"> -->
+        <ng-container *ngIf="signedIn">
+          <a class="ui item" routerLink="/inbox" routerLinkActive="active">
+            Inbox
+          </a>
+          <a class="ui item" routerLink="/signout" routerLinkActive="active">
+            Sign Out
+          </a>
+        </ng-container>
+        <!-- <ng-container *ngIf="!(signedIn | async)"> -->
+        <ng-container *ngIf="!signedIn">
+          <a class="ui item"
+            routerLink="/" 
+            [routerLinkActiveOptions]="{exact: true}" 
+            routerLinkActive="active"
+          >
+            Sign In
+          </a>
+          <a class="ui item" routerLink="/signup" routerLinkActive="active">
+            Sign Up
+          </a>
+        </ng-container>
+    </div>
+  </div>
+
   <router-outlet></router-outlet>
 </div>

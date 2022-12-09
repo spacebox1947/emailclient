@@ -3,6 +3,8 @@ import { FormGroup, FormControl, AsyncValidatorFn } from '@angular/forms';
 import { Validators, ValidatorFn } from '@angular/forms';
 import { MatchPassword } from '../validators/match-password';
 import { UniqueUsername } from '../validators/unique-username';
+import { AuthService, SignUpCredentials } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -36,10 +38,35 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private matchPassword: MatchPassword,
-    private uniqueUsername: UniqueUsername  
+    private uniqueUsername: UniqueUsername,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
+  }
+
+  onSubmit() {
+    if (this.authForm.invalid) {
+      return;
+    }
+    // send valid form to auth service
+    this.authService.signUp(this.authForm.value as SignUpCredentials).subscribe( {
+      // call when theres a new value
+      next: (response) => {
+        // manually navigate to inbox
+        this.router.navigateByUrl('/inbox');
+      },
+      // oops!
+      error: (err) => {
+        //console.log(err);
+        if (!err.status) {
+          this.authForm.setErrors({ noConnection: true })
+        } else {
+          this.authForm.setErrors({ unknownError: true });
+        }
+      }
+    });
   }
 
 }

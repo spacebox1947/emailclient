@@ -9,6 +9,7 @@ import { FormControl, AbstractControl } from '@angular/forms';
 export class InputComponent implements OnInit {
   @Input() label: string = '';
   @Input() control: FormControl | any;
+  @Input() inputType: string = ''; // empty string or password
 
   constructor() { }
 
