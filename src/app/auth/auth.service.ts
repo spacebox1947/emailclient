@@ -43,6 +43,8 @@ interface SignedInResponse {
 })
 export class AuthService {
   rootUrl: string = 'https://api.angular-email.com';
+  // should be able to initialize this with a null ---
+  // could run into issues if checkAuth and signedIn are updated at the wrong time
   signedIn$ = new BehaviorSubject(false);
 
   constructor(private http: HttpClient) { }
