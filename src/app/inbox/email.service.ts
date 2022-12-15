@@ -25,4 +25,8 @@ export class EmailService {
     // return a single email by url for EmailShowCOmponent
     return this.http.get<Email>( `${this.rootUrl}/emails/${id}` );
   }
+
+  sendEmail(email: Email) {
+    return this.http.post(`${this.rootUrl}/emails`, email);
+  }
 }

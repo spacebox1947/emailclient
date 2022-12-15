@@ -46,6 +46,7 @@ export class AuthService {
   // should be able to initialize this with a null ---
   // could run into issues if checkAuth and signedIn are updated at the wrong time
   signedIn$ = new BehaviorSubject(false);
+  username: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -58,8 +59,9 @@ export class AuthService {
     return this.http.post<SignUpResponse>(
       this.rootUrl+'/auth/signup', credentials).pipe(
         // any errors will skip tap()
-        tap(() => {
+        tap((response) => {
           this.signedIn$.next(true);
+          this.username = response.username;
         }
       )
     );
@@ -69,8 +71,10 @@ export class AuthService {
     return this.http.post<SignInResponse>(
       this.rootUrl+'/auth/signin', credentials).pipe(
         // any errors will skip tap()
-        tap(() => {
+        // tap (({username}) => ) //also valid
+        tap((response) => {
           this.signedIn$.next(true);
+          this.username = response.username;
         }
       )
     );
@@ -79,8 +83,9 @@ export class AuthService {
   checkAuthStatus() {
     return this.http.get<SignedInResponse>(
       this.rootUrl+'/auth/signedin').pipe(
-        tap(({ authenticated }) => {
+        tap(({ authenticated, username }) => {
           this.signedIn$.next(authenticated)
+          this.username = username;
         }
       )
     );

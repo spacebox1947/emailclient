@@ -3,10 +3,10 @@
         <!-- give a relative dynamic path -- adds to CURRENT route -->
         <a [routerLink]="email.id" routerLinkActive="active">
         <div class="content">
-            <div class="header">
+            <div class="header trim">
                 {{ email.subject }}
             </div>
-            <p>
+            <p class="trim">
                 {{ email.from }}
             </p>
         </div>

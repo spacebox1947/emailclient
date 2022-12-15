@@ -1,12 +1,23 @@
 <div class="field">
     <label>{{ label }}</label>
-    <input [formControl]="control" [type]="inputType" />
+    <input
+        *ngIf="controlType === 'input'"
+        [formControl]="control"
+        [type]="inputType" />
+    
+    <textarea
+        *ngIf="controlType === 'textarea'"
+        [formControl]="control"></textarea>
+    
     <div 
         class="ui pointing red basic label"
         *ngIf="showErrors()"    
     >
         <p *ngIf="control.errors.required">
             Value is required. Please comply.
+        </p>
+        <p *ngIf="control.errors.email">
+            Use an email, goofus!
         </p>
         <p *ngIf="control.errors.minlength">
             You have {{ control.errors.minlength.actualLength }} characters.

@@ -1,1 +1,11 @@
-<p>email-create works!</p>
+<button (click)="modalIsVisible=true" class="ui button inverted primary fluid">
+    Compose
+</button>
+
+<app-modal (dismiss)="modalIsVisible=false"  *ngIf="modalIsVisible">
+    <div modalTitle>Compose a Lovely eMail</div>
+    <app-email-form [email]="email" (emailSubmit)="onSubmit($event)"></app-email-form>
+    <div modalFooter>No draft will be saved.
+        <button (click)="modalIsVisible=false" class="ui danger button">Cancel</button>
+    </div>
+</app-modal>

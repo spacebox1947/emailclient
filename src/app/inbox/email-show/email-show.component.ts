@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EmailService } from '../email.service';
-import { switchMap } from 'rxjs/operators';
 import { Email } from '../email';
 
 @Component({
@@ -12,9 +10,18 @@ import { Email } from '../email';
 export class EmailShowComponent implements OnInit {
   email!: Email;
 
-  constructor(
-    private route: ActivatedRoute,
-    private emailService: EmailService) { }
+  constructor(private route: ActivatedRoute) { 
+      // component WILL NOT show until some stuff comes back
+      //console.log(this.route.snapshot.data);//get snapshot from router-resolver
+      // get immediate data from snapshot INCASE comp loads before observable response
+      this.email = this.route.snapshot.data['email']; 
+      // get updatable data from observer
+      // destructure router.data to get email
+      this.route.data.subscribe(({ email }) => {
+        //console.log(data); // show the email baby
+        this.email = email;
+      });
+    }
 
   /*
     Activated route can return information ... there are two things to interract with:
@@ -48,7 +55,7 @@ export class EmailShowComponent implements OnInit {
     })
     */
 
-    // the goodway with switchMap
+    /* // the goodway with switchMap
     this.route.params.pipe(
       // destructure id out of params
       switchMap(({ id }) => {
@@ -58,7 +65,10 @@ export class EmailShowComponent implements OnInit {
     ).subscribe((email) => {
       //console.log(email);
       this.email = email;
-    })
+    }) */
+
+    // resolver from route Object
+    
   }
 
 }

@@ -1,6 +1,7 @@
 <div class="header" *ngIf="email">
     <div>
         <h3> {{ email.subject }} </h3>
+        
         <div>
             From: <i>{{ email.from }}</i>
         </div>
@@ -8,8 +9,9 @@
             To: <i>{{ email.to }}</i>
         </div>
         <div>
-            Subject: {{ email.subject }}
+            <app-email-reply [email]="email"></app-email-reply>
         </div>
+        <div class="ui divider"></div>
         <div [innerHTML]="email.html"></div>
     </div>
 </div>
