@@ -5,6 +5,7 @@ import { InboxHomeComponent } from './inbox-home/inbox-home.component';
 import { PlaceholderComponent } from './placeholder/placeholder.component';
 import { EmailResolverService } from './email-resolver.service';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,14 +20,18 @@ const routes: Routes = [
       // show EmailShow when there is any strin concat on the root (as id)
       // : acts as a wild card (kinda)
       // ALSO, that is the name of the param for the ActiveRoute
+      // show Placeholder on root route of inbox
+      
       { path: ':id',
+        // check should we load this  ---  
+        // canLoad: [AuthGuard], // canActivate
         component: EmailShowComponent,
         resolve: {
           email: EmailResolverService // data 'email' comes from EmailResolverService
         }
       },
-      // show Placeholder on root route of inbox
-      { path: '', component: PlaceholderComponent }
+      { path: '', component: PlaceholderComponent}
+      /* { path: '**', redirectTo: 'not-found'} */
     ]
   }
 ];

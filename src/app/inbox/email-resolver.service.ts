@@ -4,6 +4,7 @@ import { Email } from './email';
 import { EmailService } from './email.service';
 import { catchError } from 'rxjs';
 import { EMPTY } from 'rxjs';
+import { identifierName } from '@angular/compiler';
 
 /*
 * Resolvers use a resolve method,
@@ -14,6 +15,8 @@ import { EMPTY } from 'rxjs';
   providedIn: 'root'
 })
 export class EmailResolverService implements Resolve<Email> {
+  rootUrl = 'https://api.angular-email.com';
+
 
   // route: lots of information about current route
   constructor(private emailService: EmailService, private router: Router) { }
@@ -24,9 +27,12 @@ export class EmailResolverService implements Resolve<Email> {
     // route contains our email id in params!
     const { id } = route.params;
     // get an Observable <Email> from EmailService, send to EmailShowComp
+    //console.log(this.emailService.getEmailById(id));
     return this.emailService.getEmailById(id).pipe(
-      catchError(() => {
+      catchError((err) => {
+        //console.log(err);
         this.router.navigateByUrl('/inbox/not-found');
+        //this.router.navigateByUrl(`${this.rootUrl}/not-found`);
         // rxjs expects an observable returned from resolve,
         // soo.... send an EMPTY observable
         return EMPTY;

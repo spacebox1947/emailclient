@@ -23,7 +23,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
             //url: ,
             //headers: ,
         });
-        return next.handle(modifiedReq).pipe(
+        return next.handle(modifiedReq);//.pipe(
             // this method is fine if only checking for one event
             //filter(val => val.type ===HttpEventType.Sent),
             // ---------
@@ -38,6 +38,6 @@ export class AuthHttpInterceptor implements HttpInterceptor {
                     console.log('Got a response from the API', val);
                 }
             }) */
-        );
+        //);
     }
 }

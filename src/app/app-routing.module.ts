@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'inbox',
     canLoad: [AuthGuard],
     loadChildren: () =>
-      import('./inbox/inbox.module').then((mod) => mod.InboxModule)
+      import('./inbox/inbox.module').then(mod => mod.InboxModule)
   }
 ];
 
